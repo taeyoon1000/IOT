@@ -1,0 +1,24 @@
+from flask import Flask 
+import RPi.GPIO as GPIO
+GPIO.setwarnings(False)
+app = Flask(__name__)
+LED=8
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(8,GPIO.OUT,initial=GPIO.LOW)
+@app.route("/")
+def helloworld():
+    return "Hello world"
+@app.route("/led/on")
+def led_on():
+    GPIO.output(8,GPIO.HIGH)
+    return "LED on"
+@app.route("/led/off")
+def led_off():
+    GPIO.output(8,GPIO.LOW)
+    return "LED off"
+@app.route("/gpio/cleanup")
+def gpio_cleanup():
+    GPIO.cleanup()
+    return "GPIO CLEANUP"
+if __name__ == "__main__":
+    app.run(host="0.0.0.0") 
